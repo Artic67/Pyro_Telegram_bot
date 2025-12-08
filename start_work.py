@@ -33,19 +33,9 @@ proxy = {
 with open("banwordlist.json", mode="r", encoding="utf-8") as read_file:
     banwordList = json.load(read_file)["banwords"]
 
-
-async def show_history():
-    async with bot:
-        # "me" refers to your own chat (Saved Messages)
-        counter = 0
-        async for message in bot.get_chat_history(TARGET_CHAT):
-            if counter < 10:
-                print(message)
-                print(len(str(message.caption)))
-                print(str(message.caption))
-                counter += 1
-            else:
-                break
+async def show_history(client, TARGET_CHAT, limit=10):
+    async for message in client.get_chat_history(TARGET_CHAT, limit):
+        print(message)
 
 # Inbound message handler
 async def echo_handler(client: Client, message: Message):
